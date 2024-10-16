@@ -1,0 +1,106 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorBTC
+    network: bsc
+    source:
+      address: "0x178bA789e24A1d51E9Ea3Cb1Db3B52917963D71D"
+      abi: ChainlinkAggregator
+      startBlock: 7346939
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ChainlinkAggregatorBTC/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedBTC
+      file: ChainlinkAggregatorBTC/ChainlinkAggregatorBTC.wasm
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorETH
+    network: bsc
+    source:
+      address: "0xfC3069296a691250fFDf21fe51340fdD415a76ed"
+      abi: ChainlinkAggregator
+      startBlock: 7384787
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ChainlinkAggregatorETH/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedETH
+      file: ChainlinkAggregatorBTC/ChainlinkAggregatorBTC.wasm
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorBNB
+    network: bsc
+    source:
+      address: "0x137924D7C36816E0DcAF016eB617Cc2C92C05782"
+      abi: ChainlinkAggregator
+      startBlock: 7347701
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ChainlinkAggregatorBNB/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedBNB
+      file: ChainlinkAggregatorBTC/ChainlinkAggregatorBTC.wasm
+  - kind: ethereum/contract
+    name: Vault
+    network: bsc
+    source:
+      address: "0xc73A8DcAc88498FD4b4B1b2AaA37b0a2614Ff67B"
+      abi: Vault
+      startBlock: 6900000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - HourlyPoolStat
+        - FeeBasisPoint
+        - PoolStat
+        - FeeStat
+        - VolumeStat
+      abis:
+        - name: Vault
+          file: Vault/Vault.json
+        - name: Token
+          file: Vault/Token.json
+      eventHandlers:
+        - event: BuyUSDG(address,address,uint256,uint256)
+          handler: handleBuyUSDG
+        - event: SellUSDG(address,address,uint256,uint256)
+          handler: handleSellUSDG
+        - event: CollectMarginFees(address,uint256,uint256)
+          handler: handleCollectMarginFees
+        - event: DecreasePoolAmount(address,uint256)
+          handler: handleDecreasePoolAmount
+        - event: DecreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256)
+          handler: handleDecreasePosition
+        - event: IncreasePoolAmount(address,uint256)
+          handler: handleIncreasePoolAmount
+        - event: IncreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256)
+          handler: handleIncreasePosition
+        - event: LiquidatePosition(bytes32,address,address,address,bool,uint256,uint256,uint256,int256,uint256)
+          handler: handleLiquidatePosition
+        - event: Swap(address,address,address,uint256,uint256)
+          handler: handleSwap
+      file: ChainlinkAggregatorBTC/ChainlinkAggregatorBTC.wasm
